@@ -22,8 +22,6 @@ public class RaceGame extends BasicGame {
     World mundo;
 
 
-
-
     public RaceGame(String title) {
         super(title);
     }
@@ -31,15 +29,23 @@ public class RaceGame extends BasicGame {
     @Override
     public void init(GameContainer gameContainer) throws SlickException {
         jugador = new Player();
+        mundo = new World();
     }
 
     @Override
     public void update(GameContainer gameContainer, int i) throws SlickException {
         jugador.update(gameContainer);
+        mundo.update(gameContainer);
     }
 
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
+
+        // Llamamos a renderizar a el jugador () el circulo
         jugador.render(graphics,gameContainer);
+
+        // Llamamos a renderizar a el mundo
+        mundo.render(graphics,gameContainer);
+
     }
 }
