@@ -8,8 +8,8 @@ public class World {
 
     //Atributos
     public List<Obstacle> listaObstaculos = new LinkedList<>();
-    private double velocidadBajada=2;
-
+    private double velocidadBajada=40;
+    private int obstaculosPasados =0;
 
 
     // CONSTRUCTOR
@@ -19,17 +19,29 @@ public class World {
 
     public void update(GameContainer gameContainer){
         int y;
-
+        this.obstaculosPasados =0;
+        int cantidadPasadas=0;
+        int i=0;
         for (Obstacle x:listaObstaculos) {
             y = x.getY();
+
+            if (y>=750){
+                obstaculosPasados++;
+            }
             x.setY(y+=velocidadBajada);
         }
+
+
+
 
     }
 
     public void render(Graphics graphics, GameContainer gc){
         for (Obstacle x:listaObstaculos) {
-            x.render(gc,graphics);
+
+            if (x.getY()>=0 && x.getY()<=750){
+                x.render(gc,graphics);
+            }
         }
     }
 
@@ -40,7 +52,7 @@ public class World {
         Obstacle o1;
         int x2antiguo;
         int cont=0;
-        for (int i = 0; i < 10000; i++) {
+        for (long i = 0; i < 100000; i++) {
             o = new Obstacle();
             o.setY((-1)*cont);
 
@@ -52,11 +64,13 @@ public class World {
 
             listaObstaculos.add(o);
             listaObstaculos.add(o1);
-            cont+=225;
+            cont+=240;
         }
     }
 
-
+    public int getObstaculosPasados(){
+        return this.obstaculosPasados;
+    }
 
     public void incrementVelocidadBajada(double s){
         this.velocidadBajada+=s;

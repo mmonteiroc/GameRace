@@ -8,9 +8,7 @@ public class Obstacle {
         private int y2;
 
 
-        private final int max=1150;
-
-    /*
+        /*
         CREAMOS UNA LINEA DE SEPARACION DE 150px Y DE LONGITUD
         1300
 
@@ -18,11 +16,9 @@ public class Obstacle {
     * */
 
     Obstacle(){
-
-
         this.x1=0;
-        this.x2= (int) (Math.random()*((max-0)+1))+0;
-        System.out.println("Este es el random" + x2);
+        int max = 1150;
+        this.x2= (int) (Math.random() * ((max -300)+300));
     }
 
 

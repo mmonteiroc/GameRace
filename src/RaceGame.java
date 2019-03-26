@@ -1,7 +1,22 @@
 import org.newdawn.slick.*;
-import org.newdawn.slick.geom.Circle;
 
+/**
+ * Esta es nuestra clase principal de nuestro proyecto,
+ * dicha clase hereda de BASIC GAME
+ * que es una clase que nos proporciona la libreria slick2d
+ * para crear juegos basicos.
+ */
 public class RaceGame extends BasicGame {
+
+
+    /**
+     * @param args
+     * @throws SlickException Posible excepcion que podria lanzar nuestro juego
+     *
+     * Este metodo lo que hace es inicializar nuestro juego,
+     * definir cual seran los maximos frames por segundo
+     * y crear la nueva ventana de juego
+     */
     public static void main(String[] args) throws SlickException{
         // Maximos fps por segundo
         int maxFPS = 60;
@@ -10,7 +25,7 @@ public class RaceGame extends BasicGame {
         RaceGame rg = new RaceGame("Super race !");
         AppGameContainer aplicacion = new AppGameContainer(rg,1300,750,false);
 
-        //Definimos el maximo de FPS de la ventana a 60
+        //Definimos el maximo de FPS de la ventana
         aplicacion.setTargetFrameRate(maxFPS);
         aplicacion.start();
 
@@ -24,6 +39,11 @@ public class RaceGame extends BasicGame {
     World mundo;
 
 
+    /**
+     * @param title Titulo de la ventana
+     * Constructor del juego el cual
+     * llamamos al super de esta clase
+     */
     public RaceGame(String title) {
         super(title);
     }
@@ -77,23 +97,30 @@ public class RaceGame extends BasicGame {
 
 
 
-        if (jugador.score%1001==1000){
-            mundo.incrementVelocidadBajada(0.5);
-        }
-        jugador.score+=1;
+
+        // PUNTUCUACION JUGADOR
+        jugador.score=(mundo.getObstaculosPasados() /2);
+
+        // incrementamos la velocidad cada 50 puntos
     }
 
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
         // Mostramos la puntuacion del jugador
-        graphics.drawString("Puntuación: "+jugador.score,1100,10);
-
+        graphics.drawString("Puntuación: "+jugador.score*10,1100,10);
         graphics.drawString("Velocidad scroll: "+ mundo.getSpeed(),1100,30);
+        graphics.setLineWidth((float) 2.5);
 
-        if (jugador.score>=0 && jugador.score <1000){
+
+        // COLORES DE NIVEL
+
+        int level = jugador.score*10;
+        if (level>=0 && level <500){
             graphics.setBackground(Color.blue);
-        }else if (jugador.score >=1000){
+        }else if (level>=500 && level<1000 ){
             graphics.setBackground(Color.red);
+        }else if (level>=1000 && level<1500){
+            graphics.setBackground(Color.darkGray);
         }
 
 
