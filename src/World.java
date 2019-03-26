@@ -9,9 +9,10 @@ public class World {
 
     //Atributos
     List<Obstacle> listaObstaculos = new LinkedList<>();
-
     Obstacle o = new Obstacle();
 
+    // DEFINIMOS VELOCIDAD DE BAJADA DE LOS OBSTACULOS
+    private int velocidadBajada=2;
 
 
 
@@ -19,7 +20,6 @@ public class World {
     //Metodos de World
 
 
-    int velocidadBajada=2;
 
     int y=0;
     int x=0;
