@@ -32,6 +32,8 @@ public class RaceGame extends BasicGame {
     public void init(GameContainer gameContainer) throws SlickException {
         jugador = new Player();
         mundo = new World();
+
+
     }
 
     @Override
@@ -72,12 +74,27 @@ public class RaceGame extends BasicGame {
         }
 
 
+
+
+
+        if (jugador.score%1001==1000){
+            mundo.incrementVelocidadBajada(0.5);
+        }
+        jugador.score+=1;
     }
 
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
         // Mostramos la puntuacion del jugador
         graphics.drawString("Puntuación: "+jugador.score,1100,10);
+
+        graphics.drawString("Velocidad scroll: "+ mundo.getSpeed(),1100,30);
+
+        if (jugador.score>=0 && jugador.score <1000){
+            graphics.setBackground(Color.blue);
+        }else if (jugador.score >=1000){
+            graphics.setBackground(Color.red);
+        }
 
 
 
@@ -88,7 +105,11 @@ public class RaceGame extends BasicGame {
 
             //Si esta pausado lo que hacemos es
             // mostrar una pequeña pantalla de pausa
-            graphics.drawString("El juego esta pausado,\npulsa \'space\' para resumir\nPulsa ESC si quieres cerrar el juego\nPulsa enter para reiniciar partida",520,350);
+            graphics.drawString("El juego esta pausado,\n" +
+                                    "pulsa \'space\' para resumir\n" +
+                                    "Pulsa ESC si quieres cerrar el juego\n" +
+                                    "Pulsa enter para reiniciar partida"
+                    ,520,350);
 
         }else {
             // Si el juego no esta pausado, renderizamos nuestro

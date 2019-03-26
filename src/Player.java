@@ -7,7 +7,7 @@ public class Player {
 
     // Atributos de player
     int score;
-
+    private double speed=15;
 
 
     // Metodos
@@ -33,8 +33,8 @@ public class Player {
         Input i = gameContainer.getInput();
 
         // Movimientos del jugador
-        if (i.isKeyDown(Input.KEY_LEFT )&& x>=10)x-=10;
-        if (i.isKeyDown(Input.KEY_RIGHT)&&x<=1300-70)x+=10;
+        if (i.isKeyDown(Input.KEY_LEFT )&& x>=10)x-=speed;
+        if (i.isKeyDown(Input.KEY_RIGHT)&&x<=1300-70)x+=speed;
 
         /*
         ACTIVAMOS ESTO SI QUEREMOS PODER
