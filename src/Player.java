@@ -1,14 +1,16 @@
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Circle;
 
 public class Player {
 
     // Atributos de player
     int score;
+     int scoreHidden=0;
     private double speed=15;
-
+    Circle c;
 
     // Metodos
     //Atributos circulo
@@ -17,7 +19,7 @@ public class Player {
 
     public void render(Graphics graphics, GameContainer gc){
         // Creamos el circulo
-        Circle c = new Circle(0,0,30);
+        c = new Circle(0,0,30);
 
         // Definimos posiciones X y Y del circulo
         c.setX(x);
@@ -28,7 +30,7 @@ public class Player {
 
     }
 
-    public void update(GameContainer gameContainer){
+    public void update(GameContainer gameContainer, World mundo)throws SlickException {
 
         Input i = gameContainer.getInput();
 
@@ -45,7 +47,22 @@ public class Player {
         */
 
 
+        if (c.intersects(mundo.listaObstaculos.getFirst().rec1) || c.intersects(mundo.listaObstaculos.getFirst().rec2)){
+            gameContainer.reinit();
+            gameContainer.pause();
+        }
 
     }
+
+    public void añadirPuntuacion(int x){
+
+        int oldScore = this.score;
+        this.score=x;
+        if (this.score!=oldScore){
+
+            scoreHidden++;
+        }
+    }
+
 
 }

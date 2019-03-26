@@ -1,72 +1,75 @@
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 public class World {
 
     //Atributos
-    public List<Obstacle> listaObstaculos = new LinkedList<>();
-    private double velocidadBajada=40;
+    public LinkedList<Obstacle> listaObstaculos = new LinkedList<>();
+    private double velocidadBajada=2;
     private int obstaculosPasados =0;
 
 
     // CONSTRUCTOR
-    World(){createObstacles();}
+    World(){createObstacles(10);}
 
     //Metodos de World
 
     public void update(GameContainer gameContainer){
         int y;
-        this.obstaculosPasados =0;
-        int cantidadPasadas=0;
         int i=0;
-        for (Obstacle x:listaObstaculos) {
-            y = x.getY();
+        Obstacle x;
 
-            if (y>=750){
+        for (int j = 0; j < listaObstaculos.size(); j++) {
+            x=listaObstaculos.get(j);
+            if (x.getPosicion()>=730){
                 obstaculosPasados++;
+                listaObstaculos.remove(i);
+                añadirObs();
             }
-            x.setY(y+=velocidadBajada);
+            x.aumentarPosicion(velocidadBajada);
         }
-
 
 
 
     }
 
     public void render(Graphics graphics, GameContainer gc){
-        for (Obstacle x:listaObstaculos) {
-
-            if (x.getY()>=0 && x.getY()<=750){
-                x.render(gc,graphics);
-            }
+        Obstacle o;
+        for (int i = 0; i < this.listaObstaculos.size(); i++) {
+            o = listaObstaculos.get(i);
+            o.render(gc,graphics);
         }
+
+
     }
 
 
-    private void createObstacles(){
+    private void createObstacles(int x){
+        Obstacle o;
+        int pos=0;
+        for (int i = 0; i < x; i++) {
 
-        Obstacle o ;
-        Obstacle o1;
-        int x2antiguo;
-        int cont=0;
-        for (long i = 0; i < 100000; i++) {
-            o = new Obstacle();
-            o.setY((-1)*cont);
-
-            x2antiguo = o.getX2() + 150;
-
-            o1 = new Obstacle();
-            o1.setX(x2antiguo);
-            o1.setY((-1)*cont);
-
+            o=new Obstacle(pos);
+            pos -=260;
             listaObstaculos.add(o);
-            listaObstaculos.add(o1);
-            cont+=240;
         }
+
+
     }
+
+    private void añadirObs(){
+        Obstacle o;
+        int pos=listaObstaculos.getLast().getPosicion();
+        o=new Obstacle(pos-260);
+        listaObstaculos.add(o);
+
+    }
+
+
 
     public int getObstaculosPasados(){
         return this.obstaculosPasados;

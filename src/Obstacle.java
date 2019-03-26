@@ -1,51 +1,36 @@
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Rectangle;
+
+import java.awt.*;
+import java.util.Random;
 
 public class Obstacle {
-        private int x1;
-        private int y1;
-        private int x2;
-        private int y2;
+    private int posicion;
+    private int longitud=(int)(Math.random()*1150) +1;
 
-
-        /*
-        CREAMOS UNA LINEA DE SEPARACION DE 150px Y DE LONGITUD
-        1300
-
-
-    * */
-
-    Obstacle(){
-        this.x1=0;
-        int max = 1150;
-        this.x2= (int) (Math.random() * ((max -300)+300));
+    Obstacle(int posicion){
+        this.posicion=posicion;
     }
 
 
-    // DOS LINEAS PRIMERA SERA LONG RANDOM COMO MUCHO SERA 1250
+    Rectangle rec1;
+    Rectangle rec2;
 
-    public void render(GameContainer gameContainer, Graphics graphics){
-        graphics.drawLine(this.x1,this.y1,this.x2,this.y2);
+    public void render(GameContainer gc, Graphics g){
+        rec1= new Rectangle(0,this.posicion,this.longitud,1);
+        rec2= new Rectangle(this.longitud+150,this.posicion,1300-this.longitud,1);
+
+        g.draw(rec1);
+        g.draw(rec2);
     }
 
 
-    public void setY(int y){
-        this.y1=y;
-        this.y2=y;
-
+    public int getPosicion(){
+        return this.posicion;
     }
 
-    public void setX(int x1){
-        this.x1=x1;
-        this.x2=1300;
-    }
-
-
-    public int getX2(){
-        return this.x2;
-    }
-
-    public int getY(){
-        return this.y1;
+    public void aumentarPosicion(double x){
+        this.posicion+=x;
     }
 }

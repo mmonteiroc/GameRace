@@ -37,6 +37,7 @@ public class RaceGame extends BasicGame {
     // Atributos de la clase
     Player jugador;
     World mundo;
+    Fantasma fantasmilla;
 
 
     /**
@@ -52,7 +53,7 @@ public class RaceGame extends BasicGame {
     public void init(GameContainer gameContainer) throws SlickException {
         jugador = new Player();
         mundo = new World();
-
+        fantasmilla=new Fantasma();
 
     }
 
@@ -62,7 +63,7 @@ public class RaceGame extends BasicGame {
 
 
         if (!gameContainer.isPaused()){
-            jugador.update(gameContainer);
+            jugador.update(gameContainer,mundo);
             mundo.update(gameContainer);
         }
 
@@ -99,7 +100,15 @@ public class RaceGame extends BasicGame {
 
 
         // PUNTUCUACION JUGADOR
-        jugador.score=(mundo.getObstaculosPasados() /2);
+
+
+        jugador.añadirPuntuacion(mundo.getObstaculosPasados());
+
+        if (jugador.scoreHidden==20){
+            jugador.scoreHidden=0;
+            mundo.incrementVelocidadBajada(0.2);
+        }
+
 
         // incrementamos la velocidad cada 50 puntos
     }
@@ -128,7 +137,7 @@ public class RaceGame extends BasicGame {
         // Llamamos a renderizar a el jugador () el circulo
 
 
-        if (gameContainer.isPaused()){
+        if (gameContainer.isPaused()&&jugador.score>0){
 
             //Si esta pausado lo que hacemos es
             // mostrar una pequeña pantalla de pausa
@@ -138,11 +147,18 @@ public class RaceGame extends BasicGame {
                                     "Pulsa enter para reiniciar partida"
                     ,520,350);
 
-        }else {
+        }else if(gameContainer.isPaused()&&jugador.score==0){
+            graphics.drawString("Has perdido\n" +
+                            "Pulsa ESC si quieres cerrar el juego\n" +
+                            "Pulsa enter para reiniciar partida"
+                    ,520,350);
+
+        }else{
             // Si el juego no esta pausado, renderizamos nuestro
             // personaje y a el mundo con los obstaculos
             jugador.render(graphics,gameContainer);
             mundo.render(graphics,gameContainer);
+            fantasmilla.render(gameContainer, graphics);
         }
 
 
