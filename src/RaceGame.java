@@ -9,6 +9,7 @@ import org.newdawn.slick.*;
 public class RaceGame extends BasicGame {
 
 
+
     /**
      * @param args
      * @throws SlickException Posible excepcion que podria lanzar nuestro juego
@@ -23,21 +24,25 @@ public class RaceGame extends BasicGame {
 
         // Creamos la ventana de juego
         RaceGame rg = new RaceGame("Super race !");
-        AppGameContainer aplicacion = new AppGameContainer(rg,1300,750,false);
+        aplicacion = new AppGameContainer(rg,1300,750,false);
 
         //Definimos el maximo de FPS de la ventana
+        aplicacion.setShowFPS(false);
         aplicacion.setTargetFrameRate(maxFPS);
         aplicacion.start();
 
+
     }
-
-
 
 
     // Atributos de la clase
     Player jugador;
     World mundo;
-    int HighScore=0;
+    private int HighScore=0;
+    private static AppGameContainer aplicacion;
+    private boolean debug = false;
+    private boolean controls = false;
+    private Runtime runtime = Runtime.getRuntime();
 
     /**
      * @param title Titulo de la ventana
@@ -88,6 +93,25 @@ public class RaceGame extends BasicGame {
                 gameContainer.setPaused(false);
             }
         }
+
+        if (tecla.isKeyPressed(Input.KEY_F3)){
+            if (debug){
+                debug=false;
+
+            }else{
+                debug=true;
+            }
+        }
+
+        if (tecla.isKeyPressed(Input.KEY_F2)){
+            if (controls){
+                controls=false;
+
+            }else{
+                controls=true;
+            }
+        }
+
         if (tecla.isKeyPressed(Input.KEY_ESCAPE)&& !gameContainer.isPaused()){
             gameContainer.pause();
         }
@@ -105,6 +129,50 @@ public class RaceGame extends BasicGame {
         graphics.setLineWidth((float) 2.5);
         graphics.setBackground(Color.darkGray);
 
+
+
+
+        // DEBUG MENU
+
+        if (debug){
+            graphics.drawString("DEBUG MENU",10,10);
+            graphics.drawString("Fps: "+aplicacion.getFPS(),10,30);
+            graphics.drawString("Window width: "+aplicacion.getWidth(),10,50);
+            graphics.drawString("Window height: "+aplicacion.getHeight(),10,70);
+            graphics.drawString("Obstacles charged on memory: "+mundo.listaObstaculos.size(),10,90);
+            int dataSize = 1024*1024;
+            long memoriaTotal = runtime.maxMemory();
+            long memoriaFree = runtime.freeMemory();
+            long memoriaUsada = memoriaTotal-memoriaFree;
+            graphics.drawString("Memoria usada "+memoriaUsada/dataSize+"MB/"+memoriaTotal/dataSize+"MB",10,110);
+            String jug = "Player position (x,y): (";
+            jug += jugador.getX();
+            jug += ",";
+            jug += jugador.getY();
+            jug += ")";
+            graphics.drawString(jug,10,130);
+
+
+        }else {
+            graphics.drawString("Press F3 to enter\non debug menu",10,10);
+
+        }
+
+
+
+        // CONTROlS MENU HELP
+
+        if (controls){
+
+            graphics.drawString("Controls menu",350,10);
+            graphics.drawString("Move left - Left arrow",350,30);
+            graphics.drawString("Move Right - Right arrow",350,50);
+            graphics.drawString("Menu - ESC",350,70);
+            graphics.drawString("Move faster - press Ctrl",350,90);
+
+        }else {
+            graphics.drawString("Press F2 to see\ncontrol help",350,10);
+        }
 
 
 
