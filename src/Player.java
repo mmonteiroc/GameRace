@@ -3,6 +3,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.geom.Line;
 
 /**
  * Esta clase nos permite crear un objeto Player
@@ -30,9 +31,20 @@ public class Player {
      * Este metodo lo que hace es renderizar nuestro personaje
      * visualmente en sus coordenadas (x,y) que le tocan
      */
-    public void render(Graphics graphics, GameContainer gc){
+    public void render(Graphics graphics, GameContainer gc,boolean debug){
         c = new Circle(x,y,radio);
         graphics.draw(c);
+
+
+        // Mostramos una cruz
+        // encima del jugador
+        if (debug){
+            Line l = new Line(this.x,0,this.x,750);
+            graphics.draw(l);
+            l = new Line(0,this.y,1300,this.y);
+            graphics.draw(l);
+        }
+
     }
 
 
@@ -40,6 +52,7 @@ public class Player {
      * @param gameContainer
      * @param mundo Este objeto lo recibimos ya que necesitaremos
      *              saber los obstaculos para saber si hemos colisionado
+     *
      * @throws SlickException Posible excepcion que podria lanzar nuestro programa
      *
      * Este metodo lo que hace es ir actualizando la posicion del nuestro
@@ -61,14 +74,14 @@ public class Player {
 
         Input i = gameContainer.getInput();
 
-        // Movimientos del jugador
         double speed;
-        // Usar speed up de jugador
+        // Boost speed de jugador
         if (i.isKeyDown(Input.KEY_LCONTROL)){
             speed=20;
         }else{
             speed=15;
         }
+        // Movimientos del jugador
         if (i.isKeyDown(Input.KEY_LEFT )&& x>=10)x-= speed;
         if (i.isKeyDown(Input.KEY_RIGHT)&&x<=1300-70)x+= speed;
 

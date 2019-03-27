@@ -1,5 +1,7 @@
 import org.newdawn.slick.*;
 
+import java.lang.management.OperatingSystemMXBean;
+
 /**
  * Esta es nuestra clase principal de nuestro proyecto,
  * dicha clase hereda de BASIC GAME
@@ -43,6 +45,7 @@ public class RaceGame extends BasicGame {
     private boolean debug = false;
     private boolean controls = false;
     private Runtime runtime = Runtime.getRuntime();
+
 
     /**
      * @param title Titulo de la ventana
@@ -152,6 +155,12 @@ public class RaceGame extends BasicGame {
             jug += ")";
             graphics.drawString(jug,10,130);
 
+            int distancia = (int)(jugador.getY()-mundo.listaObstaculos.getFirst().getPosicion())+30;
+            if (distancia<0){
+                distancia = (int)(jugador.getY()-mundo.listaObstaculos.get(1).getPosicion())+30;
+            }
+            graphics.drawString("Next obstacle distance: " + distancia,10,150);
+
 
         }else {
             graphics.drawString("Press F3 to enter\non debug menu",10,10);
@@ -195,7 +204,7 @@ public class RaceGame extends BasicGame {
         }else{
             // Si el juego no esta pausado, renderizamos nuestro
             // personaje y a el mundo con los obstaculos
-            jugador.render(graphics,gameContainer);
+            jugador.render(graphics,gameContainer,this.debug);
             mundo.render(graphics,gameContainer);
         }
 
