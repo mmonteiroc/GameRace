@@ -8,7 +8,7 @@ import java.util.List;
 public class World {
 
     //Atributos
-    public LinkedList<Obstacle> listaObstaculos = new LinkedList<>();
+    public LinkedList<Barra> listaObstaculos = new LinkedList<>();
     private double velocidadBajada=2;
     private int obstaculosPasados =0;
 
@@ -48,11 +48,11 @@ public class World {
 
 
     private void createObstacles(int x){
-        Obstacle o;
+        Barra o;
         int pos=0;
         for (int i = 0; i < x; i++) {
 
-            o=new Obstacle(pos);
+            o=new Barra(pos);
             pos -=290+velocidadBajada;
             listaObstaculos.add(o);
         }
@@ -61,9 +61,9 @@ public class World {
     }
 
     private void añadirObs(){
-        Obstacle o;
+        Barra o;
         float pos=listaObstaculos.getLast().getPosicion();
-        o=new Obstacle((int) ((pos-290)-velocidadBajada));
+        o=new Barra((int) ((pos-290)-velocidadBajada));
         listaObstaculos.add(o);
 
     }

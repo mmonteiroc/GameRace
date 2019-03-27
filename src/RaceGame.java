@@ -167,8 +167,8 @@ public class RaceGame extends BasicGame {
             graphics.drawString("Controls menu",350,10);
             graphics.drawString("Move left - Left arrow",350,30);
             graphics.drawString("Move Right - Right arrow",350,50);
-            graphics.drawString("Menu - ESC",350,70);
-            graphics.drawString("Move faster - press Ctrl",350,90);
+            graphics.drawString("Speed boost - press Ctrl",350,70);
+            graphics.drawString("Menu - ESC",350,90);
 
         }else {
             graphics.drawString("Press F2 to see\ncontrol help",350,10);
