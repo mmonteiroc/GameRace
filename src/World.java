@@ -34,7 +34,6 @@ public class World {
         }
 
 
-
     }
 
     public void render(Graphics graphics, GameContainer gc){
@@ -54,7 +53,7 @@ public class World {
         for (int i = 0; i < x; i++) {
 
             o=new Obstacle(pos);
-            pos -=260;
+            pos -=290+velocidadBajada;
             listaObstaculos.add(o);
         }
 
@@ -63,8 +62,8 @@ public class World {
 
     private void añadirObs(){
         Obstacle o;
-        int pos=listaObstaculos.getLast().getPosicion();
-        o=new Obstacle(pos-260);
+        float pos=listaObstaculos.getLast().getPosicion();
+        o=new Obstacle((int) ((pos-290)-velocidadBajada));
         listaObstaculos.add(o);
 
     }

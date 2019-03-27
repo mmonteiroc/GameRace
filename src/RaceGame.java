@@ -37,8 +37,7 @@ public class RaceGame extends BasicGame {
     // Atributos de la clase
     Player jugador;
     World mundo;
-    Fantasma fantasmilla;
-
+    int HighScore=0;
 
     /**
      * @param title Titulo de la ventana
@@ -53,8 +52,6 @@ public class RaceGame extends BasicGame {
     public void init(GameContainer gameContainer) throws SlickException {
         jugador = new Player();
         mundo = new World();
-        fantasmilla=new Fantasma();
-
     }
 
     @Override
@@ -65,6 +62,7 @@ public class RaceGame extends BasicGame {
         if (!gameContainer.isPaused()){
             jugador.update(gameContainer,mundo);
             mundo.update(gameContainer);
+            if (jugador.score>this.HighScore)this.HighScore=jugador.score;
         }
 
 
@@ -96,45 +94,18 @@ public class RaceGame extends BasicGame {
 
 
 
-
-
-
-        // PUNTUCUACION JUGADOR
-
-
-        jugador.añadirPuntuacion(mundo.getObstaculosPasados());
-
-        if (jugador.scoreHidden==20){
-            jugador.scoreHidden=0;
-            mundo.incrementVelocidadBajada(0.2);
-        }
-
-
-        // incrementamos la velocidad cada 50 puntos
     }
 
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
         // Mostramos la puntuacion del jugador
-        graphics.drawString("Puntuación: "+jugador.score*10,1100,10);
-        graphics.drawString("Velocidad scroll: "+ mundo.getSpeed(),1100,30);
+        graphics.drawString("Score:     "+jugador.score*10,1100,10);
+        graphics.drawString("HighScore: "+this.HighScore*10,1100,30);
+        graphics.drawString("Velocidad scroll: "+ mundo.getSpeed(),1100,50);
         graphics.setLineWidth((float) 2.5);
+        graphics.setBackground(Color.darkGray);
 
 
-        // COLORES DE NIVEL
-
-        int level = jugador.score*10;
-        if (level>=0 && level <500){
-            graphics.setBackground(Color.blue);
-        }else if (level>=500 && level<1000 ){
-            graphics.setBackground(Color.red);
-        }else if (level>=1000 && level<1500){
-            graphics.setBackground(Color.darkGray);
-        }
-
-
-
-        // Llamamos a renderizar a el jugador () el circulo
 
 
         if (gameContainer.isPaused()&&jugador.score>0){
@@ -158,7 +129,6 @@ public class RaceGame extends BasicGame {
             // personaje y a el mundo con los obstaculos
             jugador.render(graphics,gameContainer);
             mundo.render(graphics,gameContainer);
-            fantasmilla.render(gameContainer, graphics);
         }
 
 

@@ -6,10 +6,10 @@ import java.awt.*;
 import java.util.Random;
 
 public class Obstacle {
-    private int posicion;
+    private float posicion;
     private int longitud=(int)(Math.random()*1150) +1;
 
-    Obstacle(int posicion){
+    Obstacle(float posicion){
         this.posicion=posicion;
     }
 
@@ -26,7 +26,7 @@ public class Obstacle {
     }
 
 
-    public int getPosicion(){
+    public float getPosicion(){
         return this.posicion;
     }
 
