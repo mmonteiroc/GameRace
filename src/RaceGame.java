@@ -42,7 +42,7 @@ public class RaceGame extends BasicGame {
     World mundo;
     private int HighScore=0;
     private static AppGameContainer aplicacion;
-    private boolean debug = false;
+    private static boolean debug = false;
     private boolean controls = false;
     private Runtime runtime = Runtime.getRuntime();
 
@@ -160,7 +160,7 @@ public class RaceGame extends BasicGame {
                 distancia = (int)(jugador.getY()-mundo.listaObstaculos.get(1).getPosicion())+30;
             }
             graphics.drawString("Next obstacle distance: " + distancia,10,150);
-
+            graphics.drawString("Collisions enabled - F5 : " + jugador.colisiones,10,170);
 
         }else {
             graphics.drawString("Press F3 to enter\non debug menu",10,10);
@@ -212,4 +212,9 @@ public class RaceGame extends BasicGame {
 
 
      }
+
+     public static boolean isDebug(){
+        return debug;
+     }
+
 }

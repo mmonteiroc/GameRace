@@ -20,9 +20,10 @@ public class Player {
 
     // Metodos
     //Atributos circulo
-    private int x = 630;
+    private int x = 600;
     private int y = 650;
     private int radio = 30;
+    boolean colisiones=true;
 
     /**
      * @param graphics Graphics es donde tendremos que dibujar a dicho jugador
@@ -32,7 +33,14 @@ public class Player {
      * visualmente en sus coordenadas (x,y) que le tocan
      */
     public void render(Graphics graphics, GameContainer gc,boolean debug){
-        c = new Circle(x,y,radio);
+
+        if (this.x<30){
+            this.x=30;
+        }
+        if (this.x>1300-this.radio){
+            this.x=1300-this.radio;
+        }
+        c = new Circle(x,y,30);
         graphics.draw(c);
 
 
@@ -82,13 +90,27 @@ public class Player {
             speed=15;
         }
         // Movimientos del jugador
-        if (i.isKeyDown(Input.KEY_LEFT )&& x>=10)x-= speed;
-        if (i.isKeyDown(Input.KEY_RIGHT)&&x<=1300-70)x+= speed;
+        if (i.isKeyDown(Input.KEY_LEFT )&& x>=this.radio)x-= speed;
+        if (i.isKeyDown(Input.KEY_RIGHT)&&x<=1300-this.radio)x+= speed;
 
+
+        // Condiciones de colision
+        if (RaceGame.isDebug()){
+            i = gameContainer.getInput();
+            if (i.isKeyPressed(Input.KEY_F5)){
+                if (colisiones){
+                    colisiones=false;
+                }else {
+                    colisiones=true;
+                }
+            }
+        }
         // condicion de game over colisionando con un obstaculo
         if (c.intersects(mundo.listaObstaculos.getFirst().rec1) || c.intersects(mundo.listaObstaculos.getFirst().rec2)){
-            gameContainer.reinit();
-            gameContainer.pause();
+            if (colisiones){
+                gameContainer.pause();
+                gameContainer.reinit();
+            }
         }
 
         // Puntuacion del jugador
@@ -123,4 +145,5 @@ public class Player {
     public int getY(){
         return this.y;
     }
+
 }
