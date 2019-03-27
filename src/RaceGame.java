@@ -45,6 +45,8 @@ public class RaceGame extends BasicGame {
     private static boolean debug = false;
     private boolean controls = false;
     private Runtime runtime = Runtime.getRuntime();
+    private Image bg;
+    private boolean mostrarInicio;
 
 
     /**
@@ -60,6 +62,12 @@ public class RaceGame extends BasicGame {
     public void init(GameContainer gameContainer) throws SlickException {
         jugador = new Player();
         mundo = new World();
+        mostrarInicio = true;
+        try{
+            bg = new Image("/assets/grass.jpeg");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -67,7 +75,7 @@ public class RaceGame extends BasicGame {
         Input tecla = gameContainer.getInput();
 
 
-        if (!gameContainer.isPaused()){
+        if (!gameContainer.isPaused() && !mostrarInicio){
             jugador.update(gameContainer,mundo);
             mundo.update(gameContainer);
             if (jugador.score>this.HighScore)this.HighScore=jugador.score;
@@ -81,6 +89,17 @@ public class RaceGame extends BasicGame {
         * SPACE --> RESUME
         *
         * */
+
+        if (mostrarInicio){
+
+            if (tecla.isKeyPressed(Input.KEY_SPACE)){
+                mostrarInicio=false;
+            }
+            // SALIMOS DEL JUEGO
+            if (tecla.isKeyPressed(Input.KEY_ESCAPE)){
+                gameContainer.exit();
+            }
+        }
         if (gameContainer.isPaused()){
             // RESUMIMOS PARTIDA
             if (tecla.isKeyPressed(Input.KEY_SPACE)){
@@ -126,13 +145,32 @@ public class RaceGame extends BasicGame {
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
         // Mostramos la puntuacion del jugador
+        graphics.drawImage(bg,0,0);
         graphics.drawString("Score:     "+jugador.score*10,1100,10);
         graphics.drawString("HighScore: "+this.HighScore*10,1100,30);
         graphics.drawString("Velocidad scroll: "+ mundo.getSpeed(),1100,50);
         graphics.setLineWidth((float) 2.5);
-        graphics.setBackground(Color.darkGray);
 
 
+        if (gameContainer.isPaused()&&jugador.score>0){
+
+            //Si esta pausado lo que hacemos es
+            // mostrar una pequeña pantalla de pausa
+            graphics.drawString("El juego esta pausado,\n" +
+                            "pulsa \'space\' para resumir\n" +
+                            "Pulsa ESC si quieres cerrar el juego\n" +
+                            "Pulsa enter para reiniciar partida"
+                    ,520,350);
+
+        }else if(mostrarInicio){
+            graphics.drawString("NEW GAME\nPULSAR SPACE PARA EMPEZAR\nPULSAR ESC PARA SALIR"
+                    ,520,350);
+        }else{
+            // Si el juego no esta pausado, renderizamos nuestro
+            // personaje y a el mundo con los obstaculos
+            jugador.render(graphics,gameContainer,this.debug);
+            mundo.render(graphics,gameContainer);
+        }
 
 
         // DEBUG MENU
@@ -147,7 +185,7 @@ public class RaceGame extends BasicGame {
             long memoriaTotal = runtime.maxMemory();
             long memoriaFree = runtime.freeMemory();
             long memoriaUsada = memoriaTotal-memoriaFree;
-            graphics.drawString("Memoria usada "+memoriaUsada/dataSize+"MB/"+memoriaTotal/dataSize+"MB",10,110);
+            graphics.drawString("Used memory "+memoriaUsada/dataSize+"MB/"+memoriaTotal/dataSize+"MB",10,110);
             String jug = "Player position (x,y): (";
             jug += jugador.getX();
             jug += ",";
@@ -185,28 +223,6 @@ public class RaceGame extends BasicGame {
 
 
 
-        if (gameContainer.isPaused()&&jugador.score>0){
-
-            //Si esta pausado lo que hacemos es
-            // mostrar una pequeña pantalla de pausa
-            graphics.drawString("El juego esta pausado,\n" +
-                                    "pulsa \'space\' para resumir\n" +
-                                    "Pulsa ESC si quieres cerrar el juego\n" +
-                                    "Pulsa enter para reiniciar partida"
-                    ,520,350);
-
-        }else if(gameContainer.isPaused()&&jugador.score==0){
-            graphics.drawString("Has perdido\n" +
-                            "Pulsa ESC si quieres cerrar el juego\n" +
-                            "Pulsa enter para reiniciar partida"
-                    ,520,350);
-
-        }else{
-            // Si el juego no esta pausado, renderizamos nuestro
-            // personaje y a el mundo con los obstaculos
-            jugador.render(graphics,gameContainer,this.debug);
-            mundo.render(graphics,gameContainer);
-        }
 
 
 

@@ -1,9 +1,5 @@
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.geom.Rectangle;
-
-import java.awt.*;
-import java.util.Random;
 
 public class Obstacle {
     protected float posicion;

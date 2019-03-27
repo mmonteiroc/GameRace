@@ -1,7 +1,4 @@
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Line;
 
@@ -24,6 +21,15 @@ public class Player {
     private int y = 650;
     private int radio = 30;
     boolean colisiones=true;
+    private Image balon;
+
+    Player(){
+        try{
+            balon=new Image("/assets/football.png");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     /**
      * @param graphics Graphics es donde tendremos que dibujar a dicho jugador
@@ -40,8 +46,9 @@ public class Player {
         if (this.x>1300-this.radio){
             this.x=1300-this.radio;
         }
+
+        balon.draw(this.x-radio,this.y-radio,2);
         c = new Circle(x,y,30);
-        graphics.draw(c);
 
 
         // Mostramos una cruz
@@ -112,6 +119,7 @@ public class Player {
                 gameContainer.reinit();
             }
         }
+
 
         // Puntuacion del jugador
         añadirPuntuacion(mundo.getObstaculosPasados());

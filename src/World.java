@@ -9,23 +9,25 @@ public class World {
 
     //Atributos
     public LinkedList<Barra> listaObstaculos = new LinkedList<>();
-    private double velocidadBajada=2;
-    private int obstaculosPasados =0;
+    private double velocidadBajada = 2;
+    private int obstaculosPasados = 0;
 
 
     // CONSTRUCTOR
-    World(){createObstacles(10);}
+    World() {
+        createObstacles(10);
+    }
 
     //Metodos de World
 
-    public void update(GameContainer gameContainer){
+    public void update(GameContainer gameContainer) {
         int y;
-        int i=0;
+        int i = 0;
         Obstacle x;
 
         for (int j = 0; j < listaObstaculos.size(); j++) {
-            x=listaObstaculos.get(j);
-            if (x.getPosicion()>=730){
+            x = listaObstaculos.get(j);
+            if (x.getPosicion() >= 730) {
                 obstaculosPasados++;
                 listaObstaculos.remove(i);
                 añadirObs();
@@ -36,48 +38,50 @@ public class World {
 
     }
 
-    public void render(Graphics graphics, GameContainer gc){
+    public void render(Graphics graphics, GameContainer gc) {
         Obstacle o;
         for (int i = 0; i < this.listaObstaculos.size(); i++) {
             o = listaObstaculos.get(i);
-            o.render(gc,graphics);
+            o.render(gc, graphics);
         }
+
 
 
     }
 
 
-    private void createObstacles(int x){
+    private void createObstacles(int x) {
         Barra o;
-        int pos=0;
+        int pos = 0;
         for (int i = 0; i < x; i++) {
 
-            o=new Barra(pos);
-            pos -=290+velocidadBajada;
+
+            o = new Barra(pos);
+            pos -= 300 + velocidadBajada;
             listaObstaculos.add(o);
         }
 
 
     }
 
-    private void añadirObs(){
+    private void añadirObs() {
         Barra o;
-        float pos=listaObstaculos.getLast().getPosicion();
-        o=new Barra((int) ((pos-290)-velocidadBajada));
+        float pos = listaObstaculos.getLast().getPosicion();
+        o = new Barra((int) ((pos - 300) - velocidadBajada));
         listaObstaculos.add(o);
 
     }
 
 
-
-    public int getObstaculosPasados(){
+    public int getObstaculosPasados() {
         return this.obstaculosPasados;
     }
 
-    public void incrementVelocidadBajada(double s){
-        this.velocidadBajada+=s;
+    public void incrementVelocidadBajada(double s) {
+        this.velocidadBajada += s;
     }
-    public double getSpeed(){
+
+    public double getSpeed() {
         return this.velocidadBajada;
     }
 }
