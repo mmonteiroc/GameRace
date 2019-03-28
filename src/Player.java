@@ -115,10 +115,18 @@ public class Player {
         // condicion de game over colisionando con un obstaculo
         if (c.intersects(mundo.listaObstaculos.getFirst().rec1) || c.intersects(mundo.listaObstaculos.getFirst().rec2)){
             if (colisiones){
-                gameContainer.pause();
                 gameContainer.reinit();
             }
         }
+
+        if (mundo.p!=null){
+            if (c.intersects(mundo.p.cuadrado)){
+                if (colisiones){
+                    gameContainer.reinit();
+                }
+            }
+        }
+
 
 
         // Puntuacion del jugador
@@ -126,6 +134,7 @@ public class Player {
         if (this.scoreHidden==20){
             this.scoreHidden=0;
             mundo.incrementVelocidadBajada(0.5);
+            mundo.lanzarPersonaje();
         }
 
     }

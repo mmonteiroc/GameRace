@@ -144,15 +144,12 @@ public class RaceGame extends BasicGame {
 
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
-        // Mostramos la puntuacion del jugador
+        // Opciones generales
         graphics.drawImage(bg,0,0);
-        graphics.drawString("Score:     "+jugador.score*10,1100,10);
-        graphics.drawString("HighScore: "+this.HighScore*10,1100,30);
-        graphics.drawString("Velocidad scroll: "+ mundo.getSpeed(),1100,50);
         graphics.setLineWidth((float) 2.5);
 
 
-        if (gameContainer.isPaused()&&jugador.score>0){
+        if (gameContainer.isPaused()){
 
             //Si esta pausado lo que hacemos es
             // mostrar una pequeña pantalla de pausa
@@ -168,8 +165,8 @@ public class RaceGame extends BasicGame {
         }else{
             // Si el juego no esta pausado, renderizamos nuestro
             // personaje y a el mundo con los obstaculos
-            jugador.render(graphics,gameContainer,this.debug);
             mundo.render(graphics,gameContainer);
+            jugador.render(graphics,gameContainer,this.debug);
         }
 
 
@@ -208,7 +205,6 @@ public class RaceGame extends BasicGame {
 
 
         // CONTROlS MENU HELP
-
         if (controls){
 
             graphics.drawString("Controls menu",350,10);
@@ -223,7 +219,9 @@ public class RaceGame extends BasicGame {
 
 
 
-
+        graphics.drawString("Score:     "+jugador.score*10,1100,10);
+        graphics.drawString("HighScore: "+this.HighScore*10,1100,30);
+        graphics.drawString("Velocidad scroll: "+ mundo.getSpeed(),1100,50);
 
 
 

@@ -11,7 +11,7 @@ public class World {
     public LinkedList<Barra> listaObstaculos = new LinkedList<>();
     private double velocidadBajada = 2;
     private int obstaculosPasados = 0;
-
+    public Personaje p;
 
     // CONSTRUCTOR
     World() {
@@ -35,6 +35,13 @@ public class World {
             x.aumentarPosicion(velocidadBajada);
         }
 
+        if (p != null){
+            p.aumentarPosicion(velocidadBajada+2);
+            if (p.getPosY()>=670){
+                p = null;
+            }
+        }
+
 
     }
 
@@ -46,7 +53,9 @@ public class World {
         }
 
 
-
+        if (p != null){
+            p.render(gc,graphics);
+        }
     }
 
 
@@ -72,6 +81,11 @@ public class World {
 
     }
 
+    public void lanzarPersonaje(){
+
+        p = new Personaje(-100);
+
+    }
 
     public int getObstaculosPasados() {
         return this.obstaculosPasados;
