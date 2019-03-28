@@ -32,8 +32,6 @@ public class RaceGame extends BasicGame {
         aplicacion.setShowFPS(false);
         aplicacion.setTargetFrameRate(maxFPS);
         aplicacion.start();
-
-
     }
 
 
