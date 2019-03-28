@@ -201,8 +201,8 @@ public class RaceGame extends BasicGame {
         }
 
 
-
-        // CONTROlS MENU HELP
+        // CONTROl
+        // MENU HELP
         if (controls){
 
             graphics.drawString("Controls menu",350,10);
