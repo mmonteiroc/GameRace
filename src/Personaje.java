@@ -11,11 +11,13 @@ public class Personaje extends Obstacle {
     Image personaje;
     Rectangle cuadrado;
     int x;
+    boolean extra = false;
+    boolean extra1 = false;
 
     // Constructor
     Personaje(float posicion) {
         super(posicion);
-        int max = 7;
+        int max = 9;
         String url = "";
         this.x = (int) Math.ceil(Math.random() * 1000 + 200);
         try {
@@ -34,9 +36,11 @@ public class Personaje extends Obstacle {
                     break;
                 case 5:
                     url = "/assets/mariano.png";
+                    break;
                 default:
+                    this.extra = true;
+                    this.extra1 = true;
                     url = "/assets/xavi.jpeg";
-
             }
 
             personaje = new Image(url);
@@ -50,6 +54,8 @@ public class Personaje extends Obstacle {
     public void render(GameContainer gc, Graphics g) {
 
         cuadrado = new Rectangle(this.x, this.posicion, 130, 160);
+        cuadrado.setCenterX(this.x);
+        cuadrado.setCenterY(this.posicion);
         g.texture(this.cuadrado, this.personaje, true);
         if (RaceGame.isDebug()) {
             Line l = new Line(this.x + (this.cuadrado.getWidth() / 2), 0, this.x + (this.cuadrado.getWidth() / 2), 750);

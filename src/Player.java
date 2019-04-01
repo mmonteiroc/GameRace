@@ -132,7 +132,7 @@ public class Player {
             }
         }
 
-        if (mundo.p != null) {
+        if (mundo.p != null && !mundo.p.extra) {
             if (c.intersects(mundo.p.cuadrado)) {
                 if (colisiones) {
                     gameContainer.reinit();
@@ -141,9 +141,19 @@ public class Player {
         }
 
 
+        // COLISION CON PERSONAJE PUNTUACION EXTRA
+        if (mundo.p != null && mundo.p.extra) {
+            if (c.intersects(mundo.p.cuadrado)) {
+                this.score += 20;
+                this.scoreHidden += 20;
+                mundo.p = null;
+            }
+        }
+
+
         // Puntuacion del jugador
         añadirPuntuacion(mundo.getObstaculosPasados());
-        if (this.scoreHidden == 20) {
+        if (this.scoreHidden >= 20) {
             this.scoreHidden = 0;
             mundo.incrementVelocidadBajada(0.5);
             mundo.lanzarPersonaje();
