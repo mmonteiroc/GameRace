@@ -1,12 +1,11 @@
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Rectangle;
 
-import java.awt.*;
-
-public class Personaje extends Obstacle{
+public class Personaje extends Obstacle {
     // Atributos
 
     Image personaje;
@@ -14,51 +13,62 @@ public class Personaje extends Obstacle{
     int x;
 
     // Constructor
-    Personaje(float posicion){
+    Personaje(float posicion) {
         super(posicion);
-        int max = 4;
-        String url ="";
-        this.x = (int)Math.ceil(Math.random()*1000+200);
-        try{
-            switch ((int)Math.ceil(Math.random()*max)){
+        int max = 7;
+        String url = "";
+        this.x = (int) Math.ceil(Math.random() * 1000 + 200);
+        try {
+            switch ((int) Math.ceil(Math.random() * max)) {
                 //case 1:
-                  //  url="/assets/ronaldo-back.png";
-                    //break;
+                //  url="/assets/ronaldo-back.png";
+                //break;
                 case 2:
-                    url="/assets/messi.png";
+                    url = "/assets/messi.png";
                     break;
+                case 3:
+                    url = "/assets/roger.png";
+                    break;
+                case 4:
+                    url = "/assets/pique.png";
+                    break;
+                case 5:
+                    url = "/assets/mariano.png";
                 default:
-                    url="/assets/mariano.png";
+                    url = "/assets/xavi.jpeg";
 
             }
 
             personaje = new Image(url);
-        }catch (SlickException e){
+        } catch (SlickException e) {
             e.printStackTrace();
         }
 
     }
 
 
+    public void render(GameContainer gc, Graphics g) {
 
-
-    public void render(GameContainer gc, Graphics g){
-
-        cuadrado = new Rectangle(this.x,this.posicion,130,160);
-        g.texture(this.cuadrado,this.personaje,true);
+        cuadrado = new Rectangle(this.x, this.posicion, 130, 160);
+        g.texture(this.cuadrado, this.personaje, true);
+        if (RaceGame.isDebug()) {
+            Line l = new Line(this.x + (this.cuadrado.getWidth() / 2), 0, this.x + (this.cuadrado.getWidth() / 2), 750);
+            g.draw(l);
+            //Horizontal
+            l = new Line(0, this.posicion + (this.cuadrado.getHeight() / 2), 1300, this.posicion + (this.cuadrado.getHeight() / 2));
+            g.draw(l);
+        }
 
     }
 
 
-
-
     // Getter
-    public float getPosY(){
+    public float getPosY() {
         return this.posicion;
     }
 
     // Setter
-    public void setX(int x){
+    public void setX(int x) {
         this.x = x;
     }
 }

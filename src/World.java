@@ -1,21 +1,19 @@
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 
 public class World {
 
     //Atributos
     public LinkedList<Barra> listaObstaculos = new LinkedList<>();
-    private double velocidadBajada = 2;
+    private double velocidadBajada = 3;
     private int obstaculosPasados = 0;
     public Personaje p;
 
     // CONSTRUCTOR
     World() {
-        createObstacles(10);
+        createObstacles(4);
     }
 
     //Metodos de World
@@ -31,17 +29,17 @@ public class World {
                 obstaculosPasados++;
                 listaObstaculos.remove(i);
                 añadirObs();
+
             }
             x.aumentarPosicion(velocidadBajada);
         }
 
-        if (p != null){
-            p.aumentarPosicion(velocidadBajada+2);
-            if (p.getPosY()>=670){
+        if (p != null) {
+            p.aumentarPosicion(velocidadBajada + 1.5);
+            if (p.getPosY() >= 700) {
                 p = null;
             }
         }
-
 
 
     }
@@ -54,8 +52,8 @@ public class World {
         }
 
 
-        if (p != null){
-            p.render(gc,graphics);
+        if (p != null) {
+            p.render(gc, graphics);
         }
     }
 
@@ -79,10 +77,9 @@ public class World {
         float pos = listaObstaculos.getLast().getPosicion();
         o = new Barra((int) ((pos - 300) - velocidadBajada));
         listaObstaculos.add(o);
-
     }
 
-    public void lanzarPersonaje(){
+    public void lanzarPersonaje() {
 
         p = new Personaje(-100);
 

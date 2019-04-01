@@ -10,23 +10,22 @@ public class Barra extends Obstacle {
 
     Barra(float posicion) {
         super(posicion);
-        this.longitud=(int)(Math.random()*1150) +1;
-        try{
-            this.muro =new Image("/assets/muro.jpeg");
-        }catch (Exception e){
+        this.longitud = (int) (Math.random() * 1100) + 1;
+        try {
+            this.muro = new Image("/assets/muro.jpeg");
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
     @Override
-    public void render(GameContainer gc, Graphics g){
-        rec1= new Rectangle(0,this.posicion,this.longitud,20);
+    public void render(GameContainer gc, Graphics g) {
+        rec1 = new Rectangle(0, this.posicion, this.longitud, 20);
 
-        rec2= new Rectangle(this.longitud+150,this.posicion,1300-this.longitud,20);
-        g.texture(rec1,muro,true);
-        g.texture(rec2,muro,true);
-
+        rec2 = new Rectangle(this.longitud + 200, this.posicion, 1300 - this.longitud, 20);
+        g.texture(rec1, muro, true);
+        g.texture(rec2, muro, true);
 
 
     }
