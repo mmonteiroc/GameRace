@@ -5,18 +5,17 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Rectangle;
 
-public class Personaje extends Obstacle {
+public class Enemigo {
     // Atributos
 
-    Image personaje;
+    Image enemy;
     Rectangle cuadrado;
+    float y;
     int x;
-    boolean extra = false;
-    boolean extra1 = false;
 
     // Constructor
-    Personaje(float posicion) {
-        super(posicion);
+    Enemigo(float y) {
+        this.y = y;
         int max = 9;
         String url = "";
         this.x = (int) Math.ceil(Math.random() * 1000 + 200);
@@ -38,12 +37,10 @@ public class Personaje extends Obstacle {
                     url = "/assets/mariano.png";
                     break;
                 default:
-                    this.extra = true;
-                    this.extra1 = true;
-                    url = "/assets/xavi.jpeg";
+                    url = "/assets/xavi.png";
             }
 
-            personaje = new Image(url);
+            enemy = new Image(url);
         } catch (SlickException e) {
             e.printStackTrace();
         }
@@ -53,24 +50,29 @@ public class Personaje extends Obstacle {
 
     public void render(GameContainer gc, Graphics g) {
 
-        cuadrado = new Rectangle(this.x, this.posicion, 130, 160);
+        cuadrado = new Rectangle(this.x, this.y, 130, 160);
         cuadrado.setCenterX(this.x);
-        cuadrado.setCenterY(this.posicion);
-        g.texture(this.cuadrado, this.personaje, true);
+        cuadrado.setCenterY(this.y);
+        g.texture(this.cuadrado, this.enemy, true);
         if (RaceGame.isDebug()) {
             Line l = new Line(this.x + (this.cuadrado.getWidth() / 2), 0, this.x + (this.cuadrado.getWidth() / 2), 750);
             g.draw(l);
             //Horizontal
-            l = new Line(0, this.posicion + (this.cuadrado.getHeight() / 2), 1300, this.posicion + (this.cuadrado.getHeight() / 2));
+            l = new Line(0, this.y + (this.cuadrado.getHeight() / 2), 1300, this.y + (this.cuadrado.getHeight() / 2));
             g.draw(l);
         }
 
     }
 
 
+    public void aumentarY(double aumento) {
+        this.y += aumento;
+    }
+
+
     // Getter
     public float getPosY() {
-        return this.posicion;
+        return this.y;
     }
 
     // Setter

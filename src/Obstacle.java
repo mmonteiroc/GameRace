@@ -5,7 +5,7 @@ public class Obstacle {
     protected float posicion;
     protected int longitud;
 
-    Obstacle(float posicion) {
+    public Obstacle(float posicion) {
         this.posicion = posicion;
     }
 

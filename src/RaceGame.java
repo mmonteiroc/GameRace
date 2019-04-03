@@ -1,7 +1,5 @@
 import org.newdawn.slick.*;
 
-import java.lang.management.OperatingSystemMXBean;
-
 /**
  * Esta es nuestra clase principal de nuestro proyecto,
  * dicha clase hereda de BASIC GAME
@@ -14,7 +12,7 @@ public class RaceGame extends BasicGame {
     /**
      * @param args
      * @throws SlickException Posible excepcion que podria lanzar nuestro juego
-     *                        <p>
+     *                        <enemy>
      *                        Este metodo lo que hace es inicializar nuestro juego,
      *                        definir cual seran los maximos frames por segundo
      *                        y crear la nueva ventana de juego
@@ -26,10 +24,11 @@ public class RaceGame extends BasicGame {
         // Creamos la ventana de juego
         RaceGame rg = new RaceGame("Super race !");
         aplicacion = new AppGameContainer(rg, 1300, 750, false);
-
         //Definimos el maximo de FPS de la ventana
         aplicacion.setShowFPS(false);
         aplicacion.setTargetFrameRate(maxFPS);
+
+
         aplicacion.start();
     }
 
@@ -51,7 +50,7 @@ public class RaceGame extends BasicGame {
      *              Constructor del juego el cual
      *              llamamos al super de esta clase
      */
-    public RaceGame(String title) {
+    public RaceGame(String title) throws SlickException {
         super(title);
     }
 
@@ -60,6 +59,9 @@ public class RaceGame extends BasicGame {
         jugador = new Player();
         mundo = new World();
         mostrarInicio = true;
+
+
+        System.out.println("llamamos init");
         try {
             bg = new Image("/assets/grass.jpeg");
         } catch (SlickException e) {
@@ -76,7 +78,7 @@ public class RaceGame extends BasicGame {
 
         if (!gameContainer.isPaused() && !mostrarInicio) {
             jugador.update(gameContainer, mundo);
-            mundo.update(gameContainer);
+            mundo.update();
             if (jugador.score > this.HighScore) this.HighScore = jugador.score;
         }
 
@@ -138,6 +140,7 @@ public class RaceGame extends BasicGame {
         }
 
 
+
     }
 
     @Override
@@ -178,7 +181,7 @@ public class RaceGame extends BasicGame {
 
             int x;
 
-            if (mundo.p != null) {
+            if (mundo.enemy != null) {
                 x = mundo.listaObstaculos.size() + 1;
             } else {
                 x = mundo.listaObstaculos.size();
@@ -212,7 +215,6 @@ public class RaceGame extends BasicGame {
         // CONTROl
         // MENU HELP
         if (controls) {
-
             graphics.drawString("Controls menu", 350, 10);
             graphics.drawString("Move left - Left arrow", 350, 30);
             graphics.drawString("Move Right - Right arrow", 350, 50);
@@ -228,11 +230,11 @@ public class RaceGame extends BasicGame {
         graphics.drawString("HighScore: " + this.HighScore * 10, 1100, 30);
         graphics.drawString("Velocidad scroll: " + mundo.getSpeed(), 1100, 50);
 
-
     }
 
     public static boolean isDebug() {
         return debug;
     }
+
 
 }

@@ -9,7 +9,7 @@ public class World {
     public LinkedList<Barra> listaObstaculos = new LinkedList<>();
     private double velocidadBajada = 3;
     private int obstaculosPasados = 0;
-    public Personaje p;
+    public Enemigo enemy;
 
     // CONSTRUCTOR
     World() {
@@ -18,7 +18,7 @@ public class World {
 
     //Metodos de World
 
-    public void update(GameContainer gameContainer) {
+    public void update() {
         int y;
         int i = 0;
         Obstacle x;
@@ -34,10 +34,10 @@ public class World {
             x.aumentarPosicion(velocidadBajada);
         }
 
-        if (p != null) {
-            p.aumentarPosicion(velocidadBajada + 1.5);
-            if (p.getPosY() >= 700) {
-                p = null;
+        if (enemy != null) {
+            enemy.aumentarY(velocidadBajada + 1.5);
+            if (enemy.getPosY() >= 700) {
+                enemy = null;
             }
         }
 
@@ -52,8 +52,8 @@ public class World {
         }
 
 
-        if (p != null) {
-            p.render(gc, graphics);
+        if (enemy != null) {
+            enemy.render(gc, graphics);
         }
     }
 
@@ -81,7 +81,7 @@ public class World {
 
     public void lanzarPersonaje() {
 
-        p = new Personaje(-100);
+        enemy = new Enemigo(-100);
 
     }
 

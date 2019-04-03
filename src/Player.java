@@ -2,8 +2,6 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Line;
 
-import java.io.IOException;
-
 /**
  * Esta clase nos permite crear un objeto Player
  * el cual lo que hace es crear un circulo que sera nuestro jugado
@@ -75,19 +73,19 @@ public class Player {
      * @param mundo         Este objeto lo recibimos ya que necesitaremos
      *                      saber los obstaculos para saber si hemos colisionado
      * @throws SlickException Posible excepcion que podria lanzar nuestro programa
-     *                        <p>
+     *                        <enemy>
      *                        Este metodo lo que hace es ir actualizando la posicion del nuestro
      *                        jugador dependiendo si pulsamos o no algunas teclas
      *                        Si pulsamos el control ganamos un boost de 5px por frame
      *                        Si pulsamos arrow left/right nos movemos respectivamente a la IZQ o DCHA
-     *                        <p>
+     *                        <enemy>
      *                        En este metodo tambien vamos mirando si dicho player colisiona o no con
      *                        nuestros obstaculos, ya que si colisiona eso daria la partida por finalizada
-     *                        <p>
+     *                        <enemy>
      *                        En este caso solo comparamos con que colisione con el primero obstaculo de la lista ya que
      *                        nuestro personaje no se puede mover hacia arriba/abajo, por lo tanto solo podra colisionar
      *                        siempre con el primero obstaculo
-     *                        <p>
+     *                        <enemy>
      *                        Tambien vamos mirando y aumentando la puntuacion interna del jugador dependiendo de cuantos
      *                        obstaculos vaya evitando durante la partida
      */
@@ -132,21 +130,11 @@ public class Player {
             }
         }
 
-        if (mundo.p != null && !mundo.p.extra) {
-            if (c.intersects(mundo.p.cuadrado)) {
+        if (mundo.enemy != null) {
+            if (c.intersects(mundo.enemy.cuadrado)) {
                 if (colisiones) {
                     gameContainer.reinit();
                 }
-            }
-        }
-
-
-        // COLISION CON PERSONAJE PUNTUACION EXTRA
-        if (mundo.p != null && mundo.p.extra) {
-            if (c.intersects(mundo.p.cuadrado)) {
-                this.score += 20;
-                this.scoreHidden += 20;
-                mundo.p = null;
             }
         }
 
@@ -163,7 +151,7 @@ public class Player {
 
     /**
      * @param x puntuacion
-     *          <p>
+     *          <enemy>
      *          Este pequeño metodo lo que hace es
      *          simplemente ir continuamente asignando
      *          el score al jugador
@@ -176,6 +164,7 @@ public class Player {
             scoreHidden++;
         }
     }
+
 
     // GETTERS
     public int getX() {
