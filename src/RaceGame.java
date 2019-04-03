@@ -43,7 +43,7 @@ public class RaceGame extends BasicGame {
     private Runtime runtime = Runtime.getRuntime();
     private Image bg;
     private boolean mostrarInicio;
-
+    Music song = new Music("/assets/song.ogg");
 
     /**
      * @param title Titulo de la ventana
@@ -61,6 +61,8 @@ public class RaceGame extends BasicGame {
         mostrarInicio = true;
 
 
+        song.play();
+        song.loop();
         System.out.println("llamamos init");
         try {
             bg = new Image("/assets/grass.jpeg");
@@ -69,6 +71,7 @@ public class RaceGame extends BasicGame {
             System.out.println("Ha habido una excepcion a la hora de cargar la imagen del fondo de cesped.\n" +
                     "Ir al codigo y descomentar la linea para mas info ");
         }
+
     }
 
     @Override
@@ -80,6 +83,7 @@ public class RaceGame extends BasicGame {
             jugador.update(gameContainer, mundo);
             mundo.update();
             if (jugador.score > this.HighScore) this.HighScore = jugador.score;
+
         }
 
 
@@ -138,7 +142,6 @@ public class RaceGame extends BasicGame {
         if (tecla.isKeyPressed(Input.KEY_ESCAPE) && !gameContainer.isPaused()) {
             gameContainer.pause();
         }
-
 
 
     }
@@ -224,7 +227,6 @@ public class RaceGame extends BasicGame {
         } else {
             graphics.drawString("Press F2 to see\ncontrol help", 350, 10);
         }
-
 
         graphics.drawString("Score:     " + jugador.score * 10, 1100, 10);
         graphics.drawString("HighScore: " + this.HighScore * 10, 1100, 30);

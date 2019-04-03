@@ -141,7 +141,7 @@ public class Player {
 
         // Puntuacion del jugador
         añadirPuntuacion(mundo.getObstaculosPasados());
-        if (this.scoreHidden >= 20) {
+        if (this.scoreHidden >= 10) {
             this.scoreHidden = 0;
             mundo.incrementVelocidadBajada(0.5);
             mundo.lanzarPersonaje();
